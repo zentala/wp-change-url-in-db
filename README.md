@@ -3,4 +3,4 @@
 ## 🌍 Overview
 Simple static website with developer tools. 
 
-Check out it here: https://id.zentala.io/
+Check out it here: https://tools.zentala.io/
