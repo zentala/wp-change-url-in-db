@@ -1,0 +1,14 @@
+image:
+  file: gitpod/workspace-full
+
+ports:
+  - port: 2000
+    onOpen: open-preview
+
+tasks:
+  - init: npm install
+    command: npm run dev
+
+github:
+  prebuilds:
+    master: true # enable for the master/default branch (defaults to true)

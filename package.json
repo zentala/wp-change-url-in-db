@@ -1,0 +1,28 @@
+{
+  "name": "tools.zentala.io",
+  "version": "1.0.0",
+  "description": "Simple static website with developer tools",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node ./node_modules/live-server/live-server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zentala/tools.zentala.io.git"
+  },
+  "keywords": [
+    "static",
+    "website",
+    "tools",
+    "developer"
+  ],
+  "author": "Paweł Żentała <zentala@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zentala/tools.zentala.io/issues"
+  },
+  "homepage": "https://github.com/zentala/tools.zentala.io#readme",
+  "devDependencies": {
+    "live-server": "^1.2.1"
+  }
+}
