@@ -3,172 +3,133 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Zamiana adresu URL w bazie danych WordPress</title>
-	<link rel="stylesheet" href="bootstrap.min.css">
-	<script src="jquery.min.js" type="text/javascript"></script>
-	<!-- Google Fonts -->
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"  rel="stylesheet" type="text/css">
 	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-	<!-- Custom Stylesheets -->
 	<style type="text/css">
 		body, * { font-family: verdana; }
 		h1 {margin-bottom: 25px; font-weight: 500; margin-top: 36px; margin-bottom: 15px; }
 		h4 { margin-top: 40px; margin-bottom: 20px; }
 		span.red {color: red;}
 		input[type=text] { width: 300px; }
-        input[type=radio] { margin-right: 3px; }
+    input[type=radio] { margin-right: 3px; }
 		tr td { padding: 5px 0px; }
 		tr td:first-child { padding-right: 30px; }
-		pre { margin-top: 20px;} 
+		pre { margin-top: 20px;}
 		button { margin-top: 50px;}
-        pre { border-radius: 0; margin-top: 110px; padding: 20px 25px; }
+    pre { border-radius: 0; margin-top: 110px; padding: 20px 25px; }
 	</style>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" type="text/javascript"></script>
 </head>
 <body>
-	<div class="container">
-	<div class="col-md-6">
-		<a href="../"><button><< Wróć do listy aplikacji</button></a>
-		<h1>Zamiana adresu URL strony w&nbsp;bazie danych WordPress</h1>
-		<p>Skrypt generuje kod, który należy wkleić w phpMyAdmin, w bazie naszego WordPressa, w zakładce SQL. Dzięki niemu możemy uruchomić WordPressa na innym serwerze, zmienić URL w bazie.</p>
-		<h4>Wygeneruj kod</h4>
-		
-		<form name="" id="form" action="">
-			<table>
-				<tr>
-					<td><label for="">Typ bazy danych: <span class="red">*</span></label></td>
-					<td>
-                        <input type="radio" name="db" value="mysql" class="mysql" checked>MySQL &nbsp;&nbsp;&nbsp; 
-					    <input type="radio" name="db" value="mariadb" class="mariadb">MariaDB</td>
-				</tr>
-				<tr class="old-domain">
-					<td><label for="">Stary URL: <span class="red">*</span></label></td>
-					<td><input type="text" class="old" value="http://stara_domena.pl"/></td>
-				</tr>
-				<tr>
-					<td><label for="">Nowy URL: <span class="red">*</span></label></td>
-					<td><input type="text" class="new" value="http://nowa_domena.pl"/></td>
-				</tr>
-<!--
-				<tr>
-					<td><label for="">Stara ścieżka: <span class="red">*</span></label></td>
-					<td><input type="text" class="olds" value="/var/www/stara_domena.pl/public_html"/></td>
-				</tr>
-				<tr>
-					<td><label for="">Nowa ścieżka: <span class="red">*</span></label></td>
-					<td><input type="text" class="news" value="/var/www/nowa_domena.pl/public_html"/></td>
-				</tr>
--->
-				<tr>
-					<td><label for="">Prefix MySQL: <span class="red">*</span></label></td>
-					<td><input type="text" class="prefix" value="wp_"/></td>
-				</tr>
-			</table>
-		</form>
-		
-		<h4>Materiały</h4>
-		<ul><li><a href="http://netbloger.eu/jak-zmienic-adres-strony-w-wordpress/">http://netbloger.eu/jak-zmienic-adres-strony-w-wordpress/</a></li>
-		<li><a href="https://wordpress.org/plugins/search-and-replace/">Wtyczka WP do zamiany adresów </a> - <code>Search & Replace</code></li></ul>
-	</div>
-	<div class="col-md-6">
+  <div class="container">
+    <div class="col-md-6">
+      <a href="../"><button><< Wróć do listy aplikacji</button></a>
+      <h1>Zamiana adresu URL strony w&nbsp;bazie danych WordPress</h1>
+      <p>Skrypt generuje kod, który należy wkleić w phpMyAdmin, w bazie naszego WordPressa, w zakładce SQL. Dzięki niemu możemy uruchomić WordPressa na innym serwerze, zmienić URL w bazie.</p>
+      <h4>Wygeneruj kod</h4>
 
-				<div id="code_box">
-<!--
-UPDATE <span class="prefix">wp_</span>posts SET guid = REPLACE (
-	guid,
-	'<span class="old">http://stara_domena.pl</span>',
-	'<span class="new">http://nowa_domena.pl</span>'
-);
+      <form id="form">
+        <table>
+          <tr>
+            <td><label for="">Typ bazy danych: <span class="red">*</span></label></td>
+            <td>
+              <input type="radio" name="db" value="mysql" class="mysql" checked>MySQL &nbsp;&nbsp;&nbsp;
+              <input type="radio" name="db" value="mariadb" class="mariadb">MariaDB
+            </td>
+          </tr>
+          <tr class="old-domain">
+            <td><label for="">Stary URL: <span class="red">*</span></label></td>
+            <td><input type="text" class="old" value="http://stara_domena.pl"/></td>
+          </tr>
+          <tr>
+            <td><label for="">Nowy URL: <span class="red">*</span></label></td>
+            <td><input type="text" class="new" value="http://nowa_domena.pl"/></td>
+          </tr>
+          <tr>
+            <td><label for="">Prefix MySQL: <span class="red">*</span></label></td>
+            <td><input type="text" class="prefix" value="wp_"/></td>
+          </tr>
+        </table>
+      </form>
 
-UPDATE <span class="prefix">wp_</span>posts SET post_content = REPLACE (
-	post_content,
-	'<span class="old">http://stara_domena.pl</span>',
-	'<span class="new">http://nowa_domena.pl</span>'
-);
--->
+      <h4>Materiały</h4>
+      <ul><li><a href="http://netbloger.eu/jak-zmienic-adres-strony-w-wordpress/">http://netbloger.eu/jak-zmienic-adres-strony-w-wordpress/</a></li>
+      <li><a href="https://wordpress.org/plugins/search-and-replace/">Wtyczka WP do zamiany adresów </a> - <code>Search & Replace</code></li></ul>
+    </div>
+    <div class="col-md-6">
+    <div id="code_box">
+
 <pre class="mysql">
 UPDATE <span class="prefix">wp_</span>options SET option_value = replace(
-	option_value, 
-	'<span class="old">http://stara_domena.pl</span>', 
-	'<span class="new">http://nowa_domena.pl</span>'
+  option_value,
+  '<span class="old">http://stara_domena.pl</span>',
+  '<span class="new">http://nowa_domena.pl</span>'
 ) WHERE option_name IN (
-	'home', 
-	'siteurl', 
-	'upload_url_path'
+  'home',
+  'siteurl',
+  'upload_url_path'
 );
 </pre>
-<!--
-UPDATE wp_posts SET post_content = REPLACE (
-	post_content,
-	'<span class="olds">/var/www/stara_domena.pl/public_html</span>',
-	'<span class="news">/var/www/nowa_domena.pl/public_html</span>'
-);
--->
-  
+
 <pre class="mariadb" style="display: none;">
-UPDATE <span class="prefix">wp_</span>options 
-    SET option_value="<span class="new">http://nowa_domena.pl</span>" 
+UPDATE <span class="prefix">wp_</span>options
+    SET option_value="<span class="new">http://nowa_domena.pl</span>"
     WHERE option_name = "home";
-    
-UPDATE <span class="prefix">wp_</span>options 
-    SET option_value="<span class="new">http://nowa_domena.pl</span>" 
+
+UPDATE <span class="prefix">wp_</span>options
+    SET option_value="<span class="new">http://nowa_domena.pl</span>"
     WHERE option_name = "siteurl";
 </pre>
-		</div>
-		
-	</div>
-		
-		
-	</div>
 
-	
+      </div><!-- #code_box -->
+    </div><!-- col-md-6 -->
+  </div><!-- container -->
+
+
 	<script type="text/javascript">
 		$(document).ready( function() {
-			// operations on imput fields
-			function follow(name) {
+			// watch input fields
+			function listenEventsOnInput(name) {
 				// change value function
 				$( "input." + name ).keyup(function() {
 					var value = $( this ).val();
 					$( "span." + name ).text( value );
-				}).keyup();	
-				
+				}).keyup();
+
 				// monit "/" like last chair
 				$( "input." + name ).focusout(function() {
 					var value = $( this ).val();
-					if (value.charAt(value.length-1) === "/") {alert('Adres nie może kończyć się znakiem "/" ! Usuń go!');}
+					if (value.charAt(value.length-1) === "/") {
+            alert('Adres nie może kończyć się znakiem "/" ! Usuń go!');
+          }
 				}).focusout();
 			}
-			
+
 			// change specyfic inputs
-			follow("old");
-			follow("new");
-			follow("olds");
-			follow("news");
-			follow("prefix");
-            
-            
-            // mysql / mariadb swith
-            $('input.mysql').click(function() {
-                if($('input.mysql').is(':checked')) { 
-                    $('pre.mysql').css({'display':'block'});
-                    $('tr.old-domain').css({'display':'table-row'});
-                    $('pre.mariadb').css({'display':'none'});
-                }
-            });
-            
-            $('input.mariadb').click(function() {
-                if($('input.mariadb').is(':checked')) { 
-                    $('pre.mariadb').css({'display':'block'});
-                    $('pre.mysql').css({'display':'none'});
-                    $('tr.old-domain').css({'display':'none'});
-                }
-            });
+			listenEventsOnInput("old");
+			listenEventsOnInput("new");
+			listenEventsOnInput("olds");
+			listenEventsOnInput("news");
+			listenEventsOnInput("prefix");
+
+      // mysql / mariadb swith
+      $('input.mysql').click(function() {
+        if($('input.mysql').is(':checked')) {
+          $('pre.mysql').css({'display':'block'});
+          $('tr.old-domain').css({'display':'table-row'});
+          $('pre.mariadb').css({'display':'none'});
+        }
+      });
+
+      $('input.mariadb').click(function() {
+        if($('input.mariadb').is(':checked')) {
+          $('pre.mariadb').css({'display':'block'});
+          $('pre.mysql').css({'display':'none'});
+          $('tr.old-domain').css({'display':'none'});
+        }
+      });
 		});
-		
-	</script>
-	
-<!-- Dodać obsługę MariaDB -->
-<!--
-UPDATE wp_options SET option_value="http://www.liberiangeek.net" WHERE option_name = "home";
-UPDATE wp_options SET option_value="http://www.liberiangeek.net" WHERE option_name = "siteurl";
--->
-	
+  </script>
+
 </body>
 </html>
