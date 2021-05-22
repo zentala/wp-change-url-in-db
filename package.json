@@ -4,7 +4,7 @@
   "description": "Simple static website with developer tools",
   "main": "index.js",
   "scripts": {
-    "dev": "node ./node_modules/live-server/live-server.js --port=2000 --watch=\"*.html,*.css\""
+    "dev": "npx live-server --port=2000 --watch=\"*.html,*.css\""
   },
   "repository": {
     "type": "git",
